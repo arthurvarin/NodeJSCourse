@@ -15,8 +15,8 @@ To make this program work you shoud add **hello/your name here** to the url and 
 Enter the name of the developper to get a suprise (His name is Arthur)
 
 **For example:**
-_hello/Max_ should give you "Hello Max"
 
+_hello/Max_ should give you "Hello Max"
 
 _hello/Arthur_ should give you "Hello my name is Arthur, I live in Paris and I can see the eiffel tower from my window"
 
