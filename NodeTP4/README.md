@@ -3,22 +3,25 @@
 This readme will teach you everything you need to know about this program
 
 ## Installation
-You simply have to open your node.js prompt and launch : **node index.js**
+You have to compile and upload the code **ECGproject.c** onto your xm1000 by executing the command _sudo make ECGproject.upload TARGET=xm1000_
 
+Then you can launch the program by executing the command _sudo make login TARGET=xm1000_
 
-Then type on your url : **localhost:1337/**
+If you want a more visual experience you can upload the program **ECGprojectVisual.c** instead
 
 ## Usage
-To make this program work you shoud add **hello/your name here** to the url and see what happens !
 
+The program will give you an emulation of an ECG output by reproducing the signal PQRST 
 
-Enter the name of the developper to get a suprise (His name is Arthur)
+The cardiac frequency is proportionnal to the luminosity measured by the sensor, approach a light source from the sensor to increase the cardiac frequency.
 
-**For example:**
+If the patient goes into bradycardy (low bpm) the blue led will light up, if the patient goes into tachycardie (high bpm) the red led will light up.
 
-_hello/Max_ should give you "Hello Max"
+## Upload to Ubidots
 
-_hello/Arthur_ should give you "Hello my name is Arthur, I live in Paris and I can see the eiffel tower from my window"
+You can upload values to the ubidots platform by calling **IssueUpload** and giving the _variable name_ as first argument and the _variable value_ as the second argument
+
+Execute the command _python IssueUpload tachy 130_ for example
 
 ## Developpers
-This program has been developped by _Arthur Varin_
+This program has been developped by _Arthur Varin_ and _Nassim Chouf_

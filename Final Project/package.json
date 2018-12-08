@@ -2,15 +2,22 @@
   "name": "final-project",
   "version": "1.0.0",
   "description": "Final Project",
-  "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "./node_modules/.bin/ts-node src/server.ts",
+    "dev": "./node_modules/.bin/nodemon ",
+    "build": "./node_modules/.bin/tsc -p tsconfig.json"
   },
   "author": "Arthur Varin",
   "license": "ISC",
   "dependencies": {
     "expressjs": "^1.0.1",
     "jquery": "^3.3.1",
-    "nodemon": "^1.18.7"
+    "nodemon": "^1.18.7",
+    "ts-node": "^7.0.1",
+    "typescript": "^3.2.2"
+  },
+  "devDependencies": {
+    "@types/express": "^4.16.0",
+    "@types/node": "^10.12.12"
   }
 }
