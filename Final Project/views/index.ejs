@@ -1,3 +1,6 @@
+<head>
+  <% include partials/head %>
+</head>
 <body class="container">
   <div class="col-md-6.col-md-offset-3">
     <h1>Hello <%= name %></h1>
@@ -11,11 +14,13 @@
   </div>
   <script type="text/javascript">
     $('#show-metrics').click((e) => {
+
         e.preventDefault();
-        $.getJSON("/metrics.json", {}, (data) => {
-            const content = data.map(d => {
-                `<p>timestamp: ${d.timestamp}, value: ${d.value}</p>`
-                })
+        $.getJSON("/metrics", {}, (data) => {
+          const content = data.map(d => {
+            
+      return `<p>timestamp: ${d.timestamp}, value: ${d.value}</p>`
+    })
         $('#metrics').append(content.join("\n"));
     });
   })

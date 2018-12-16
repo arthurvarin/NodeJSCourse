@@ -1,6 +1,5 @@
 import { LevelDb } from './leveldb'
 const WriteStream = require('level-ws');
-const bcrypt = require('bcrypt');
 
 export class User {
   public username: string
@@ -55,7 +54,7 @@ export class UserHandler {
       if (err) callback(err)
       else if (data === undefined) callback(null, data)
 
-
+      if(data !== undefined)
       callback(null, User.fromDb(username, data))
 
 

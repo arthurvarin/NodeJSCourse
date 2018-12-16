@@ -4,6 +4,7 @@ const express = require('express')
 const bodyparser = require('body-parser')
 const session = require('express-session')
 const levelSession = require('level-session-store')
+const moment = require('moment');
 
 const path = require('path')
 const morgan = require('morgan')
@@ -145,15 +146,17 @@ else res.status(201).send("user persisted")
     next()
   })
 
-  metricsRouter.post('/:id', (req: any, res: any, next: any) => {
-    dbMet.save(req.params.id, req.body, (err: Error | null) => {
+  metricsRouter.post('/', (req: any, res: any, next: any) => {
+
+  req.body.timestamp = moment(req.body.timestamp).format("X");
+    dbMet.save(req.session.user.username, req.body, (err: Error | null) => {
       if (err) next(err)
-      res.status(200).send()
+         res.redirect('/')
     })
   })
 
-  metricsRouter.get('/:id', (req: any, res: any, next: any) => {
-    dbMet.get(req.params.id, (err: Error | null, result?: Metric[]) => {
+  metricsRouter.get('/', (req: any, res: any, next: any) => {
+    dbMet.get(req.session.user.username, (err: Error | null, result?: Metric[]) => {
       if (err) next(err)
       if (result === undefined) {
         res.write('no result')
