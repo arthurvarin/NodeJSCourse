@@ -1,8 +1,9 @@
-import encoding from 'encoding-down'
-import leveldown from 'leveldown'
-import levelup from 'levelup'
+
+const levelup = require('levelup');
+const leveldown = require('leveldown');
+const encoding = require('encoding-down');
+const del = require('del');
 import fs = require('fs')
-import del = require('del')
 
 export class LevelDb {
   static open(path: string) {

@@ -1,11 +1,12 @@
-import express = require('express')
-import { MetricsHandler, Metric } from './metrics'
-import bodyparser = require('body-parser')
-import session = require('express-session')
-import levelSession = require('level-session-store')
 import { UserHandler, User } from './user'
-import path = require('path')
-import morgan = require('morgan')
+import { MetricsHandler, Metric } from './metrics'
+const express = require('express')
+const bodyparser = require('body-parser')
+const session = require('express-session')
+const levelSession = require('level-session-store')
+
+const path = require('path')
+const morgan = require('morgan')
 
 const dbMet: MetricsHandler = new MetricsHandler('./db/metrics')
 const dbUser: UserHandler = new UserHandler('./db/users')
