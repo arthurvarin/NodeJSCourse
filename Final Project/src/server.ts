@@ -42,7 +42,8 @@ authRouter.get('/login', (req: any, res: any) => {
 })
 
 authRouter.get('/signup', (req: any, res: any) => {
-  res.render('login')
+  dbUser.delete("test",(err: Error | null) => {})
+  res.render('signup')
 })
 
 authRouter.get('/logout', (req: any, res: any) => {
@@ -52,8 +53,8 @@ authRouter.get('/logout', (req: any, res: any) => {
 })
 
 authRouter.post('/login', (req: any, res: any, next: any) => {
+if(req.body.username !== "" && req.body.password !== "")
   dbUser.get(req.body.username, (err: Error | null, result?: User) => {
-    if (err) next(err)
     if (result === undefined || !result.validatePassword(req.body.password)) {
       res.redirect('/login')
     } else {
@@ -62,7 +63,22 @@ authRouter.post('/login', (req: any, res: any, next: any) => {
       res.redirect('/')
     }
   })
+  else res.redirect('/login')
 })
+
+authRouter.post('/signup', (req: any, res: any, next: any) => {
+
+    if (req.body.username === undefined || req.body.email === undefined ||  req.body.password === undefined ||  req.body.passwordconfirmation === undefined || !dbUser.confirmPassword(req.body.password,req.body.passwordconfirmation)) {
+
+      res.redirect('/signup')
+    } else {
+      let newuser =  new User(req.body.username,req.body.email,req.body.password);
+      dbUser.save(newuser,(err: Error | null) => {})
+
+      res.redirect('/login')
+    }
+  })
+
 
 app.use(authRouter)
 

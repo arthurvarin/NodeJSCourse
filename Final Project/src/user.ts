@@ -31,8 +31,13 @@ export class User {
   }
 
   public validatePassword(toValidate: String): boolean {
-    return bcrypt.compareSync(toValidate, this.password);
+    console.log(""+toValidate + " "+ this.password )
+
+    return toValidate === this.password;
+
   }
+
+
 }
 
 export class UserHandler {
@@ -41,23 +46,39 @@ export class UserHandler {
   constructor(path: string) {
     this.db = LevelDb.open(path)
   }
-  
+
+  public confirmPassword(tocompare1: String,tocompare2: String): boolean {
+    return tocompare1 === tocompare2;
+  }
+
   public get(username: string, callback: (err: Error | null, result?: User) => void) {
     this.db.get(`user:${username}`, function (err: Error, data: any) {
       if (err) callback(err)
       else if (data === undefined) callback(null, data)
+
+      
       callback(null, User.fromDb(username, data))
+
+
     })
   }
 
   public save(user: User, callback: (err: Error | null) => void) {
-    this.db.put(`user:${user.username}`, `${user.getPassword}:${user.email}`, (err: Error | null) => {
+    console.log("creation")
+    let username = "" + user.username;
+    let email = "" + user.email;
+    let password = "" + user.getPassword();
+    console.log("creation" + " " + username+ " " + email + " " + password)
+    this.db.put(`user:${username}`, `${password}:${email}`, (err: Error | null) => {
       callback(err)
     })
+
   }
 
-  public delete(username: string, callback: (err: Error | null) => void) {
-    // TODO
+   public delete(username: string, callback: (err: Error | null) => void) {
+    this.db.del(`user:${username}`, (err: Error | null) => {
+      callback(err)
+    })
   }
 
 
