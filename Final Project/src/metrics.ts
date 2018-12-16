@@ -1,5 +1,5 @@
 import { LevelDb } from './leveldb'
-import WriteStream from 'level-ws'
+const WriteStream = require('level-ws');
 
 export class Metric {
   public timestamp: string
@@ -18,7 +18,7 @@ export class MetricsHandler {
     this.db = LevelDb.open(dbPath)
   }
 
-  public save(key: number, metrics: Metric[], callback: (error: Error | null) => void) {
+  public save(key: string, metrics: Metric[], callback: (error: Error | null) => void) {
     const stream = WriteStream(this.db)
 
     stream.on('error', callback)
@@ -40,14 +40,26 @@ export class MetricsHandler {
         callback(null, met)
       })
       .on('data', (data: any) => {
-        const [_, k, timestamp] = data.key.split(":")
+        console.log(data)
+        const [ k, timestamp] = data.key.split(":")
         const value = data.value
 
-        if (key != k) {
-          console.log(`LevelDB error: ${data} does not match key ${key}`)
-        } else {
-          met.push(new Metric(timestamp, value))
-        }
+        met.push(new Metric(timestamp, value))
+
       })
+  }
+
+  public remove(key: string,time: string,callback: (err: Error | null) => void){
+    const stream = this.db.createReadStream()
+
+    stream.on('error', (err:Error)=>callback(err))
+    .on('data', (data:any) => {
+      const [ , k, timestamp] = data.key.split(":")
+      if (key === k && time === timestamp) {
+        this.db.del(data.key)
+      }
+    })
+    .on('end', () =>{callback(null)})
+
   }
 }
